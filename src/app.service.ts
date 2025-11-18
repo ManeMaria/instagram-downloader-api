@@ -3,11 +3,12 @@ import { DownloadUsecase } from './usecases/instagram';
 
 @Injectable()
 export class AppService {
-  constructor(private readonly downloadUsecase: DownloadUsecase) {
+  constructor(private downloadUsecase: DownloadUsecase) {
     //...
   }
 
   execute(url: string): Promise<string> {
+    console.log('🚀 ~ AppService ~ execute ~ url:', url);
     return this.downloadUsecase.execute(url);
   }
 }

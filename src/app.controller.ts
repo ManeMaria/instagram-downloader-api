@@ -1,11 +1,11 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Instagram')
 @Controller('instagram')
 export class AppController {
-  constructor(private readonly appService: AppService) {
+  constructor(readonly appService: AppService) {
     //...
   }
 
@@ -16,6 +16,7 @@ export class AppController {
   })
   @ApiResponse({ status: 200, description: 'Download successful' })
   @ApiResponse({ status: 400, description: 'Invalid URL' })
+  @HttpCode(HttpStatus.OK)
   async post(@Body() body: { url: string }) {
     return this.appService.execute(body.url);
   }
