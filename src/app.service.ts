@@ -8,7 +8,6 @@ export class AppService {
   }
 
   execute(url: string): Promise<string> {
-    console.log('🚀 ~ AppService ~ execute ~ url:', url);
     return this.downloadUsecase.execute(url);
   }
 }
