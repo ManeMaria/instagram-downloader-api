@@ -1,6 +1,7 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { AppService } from './app.service';
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { DownloadDto } from './dto';
 
 @ApiTags('Instagram')
 @Controller('instagram')
@@ -11,13 +12,22 @@ export class AppController {
 
   @Post('/download')
   @ApiOperation({ summary: 'Download an Instagram post or video' })
-  @ApiBody({
-    schema: { type: 'object', properties: { url: { type: 'string' } } },
+  @ApiResponse({
+    status: 200,
+    description: 'Download successful',
+    schema: {
+      type: 'object',
+      properties: {
+        url: { type: 'string' },
+      },
+    },
   })
-  @ApiResponse({ status: 200, description: 'Download successful' })
   @ApiResponse({ status: 400, description: 'Invalid URL' })
   @HttpCode(HttpStatus.OK)
-  async post(@Body() body: { url: string }) {
-    return this.appService.execute(body.url);
+  async post(@Body() body: DownloadDto) {
+    const response = await this.appService.execute(body.url);
+    return {
+      url: response,
+    };
   }
 }
