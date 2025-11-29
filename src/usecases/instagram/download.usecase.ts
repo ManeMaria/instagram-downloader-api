@@ -18,7 +18,6 @@ export class DownloadUsecase {
 
       return video;
     } catch (error) {
-      console.error('🚀 ~ DownloadUsecase ~ execute ~ error:', error);
       throw error;
     }
   }
